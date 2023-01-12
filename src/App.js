@@ -1,23 +1,53 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import React from "react";
+import "./App.css";
+import Expenses from "./components/expenses/Expenses";
+import NewExpense from "./components/newExpense/NewExpense";
+
+const initData = [
+  {
+    id: "el1",
+    title: "Lemon",
+    date: new Date(2025, 6, 23),
+    amount: 75.4,
+  },
+  {
+    id: "el2",
+    title: "Tea",
+    date: new Date(2023, 0, 23),
+    amount: 112.5,
+  },
+  {
+    id: "el3",
+    title: "New Tv",
+    date: new Date(2025, 0, 23),
+    amount: 112.5,
+  },
+  {
+    id: "el4",
+    title: "Cake",
+    date: new Date(2024, 0, 23),
+    amount: 112.5,
+  },
+];
 
 function App() {
+ const [user, setUser] = useState(initData);
+
+
+  const saveHandler = (expenseItem) => {
+    setUser((prevState) => {
+      return[
+        expenseItem,
+        ...prevState
+      ]
+    })
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <NewExpense onChange={saveHandler} />
+      <Expenses expenses={user} />
     </div>
   );
 }
